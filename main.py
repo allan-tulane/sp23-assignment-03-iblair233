@@ -43,6 +43,17 @@ def parens_match_iterative(mylist):
     False
     """
     ### TODO
+    list = []
+
+    for char in mylist:
+        if char == '(':
+            list.append(char)
+        elif char == ')':
+            if not list:
+                return False
+            list.pop()
+
+    return len(list) == 0
     pass
 
 
@@ -59,6 +70,18 @@ def parens_update(current_output, next_input):
       the updated value of `current_output`
     """
     ###TODO
+    opencount = current_output
+    char = next_input
+    
+    if char == '(':
+        opencount += 1
+    elif char == ')':
+        if opencount > 0:
+            opencount -= 1
+        else:
+            opencount += 1
+    
+    return opencount
     pass
 
 
@@ -88,6 +111,14 @@ def parens_match_scan(mylist):
     
     """
     ###TODO
+    plist = list(map(paren_map, mylist))
+    scan_ = scan(lambda x, y: x + y, 0, plist)
+    reduce_ = reduce(min_f, 0, scan_[0])
+
+    if reduce_ >= 0 and (scan_[1] == 0):
+      return True
+    else:
+      return False    
     pass
 
 def scan(f, id_, a):
@@ -161,6 +192,19 @@ def parens_match_dc_helper(mylist):
       parens_match_dc to return the final True or False value
     """
     ###TODO
+    left = 0
+    right = 0
+    
+    for char in mylist:
+        if char == '(':
+            left += 1
+        elif char == ')':
+            if left > 0:
+                left -= 1
+            else:
+                right += 1
+    
+    return (right, left)
     pass
     
 
